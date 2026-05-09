@@ -115,7 +115,7 @@ Qualcomm HS-USB QDLoader 9008
 
 Prime Mi Flash Tool supports a wide range of Xiaomi, Redmi, POCO, and Mi devices.
 
-👉 **[View Full Supported Devices List](supported-devices.html)**
+👉 **[View Full Supported Devices List](supported-devices.md)**
 
 Some confirmed supported devices include:
 
@@ -127,7 +127,7 @@ Some confirmed supported devices include:
 | Mi Series | Mi 10T, Mi 10T Pro, Mi 10T Lite |
 | Black Shark Series | Black Shark 3, Black Shark 3 Pro |
 
-> Refer to the screenshot above or the [supported devices page](supported-devices.html) for the complete list.
+> Refer to the screenshot above or the [supported devices page](supported-devices.md) for the complete list.
 
 ---
 
