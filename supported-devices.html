@@ -1,39 +1,303 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Supported Devices — Prime Mi Flash Tool</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #0a0b0d;
-    --surface: #111318;
-    --card: #161a22;
-    --border: #1f2633;
-    --accent: #f97316;
-    --accent2: #ef4444;
-    --green: #22c55e;
-    --blue: #3b82f6;
-    --text: #e2e8f0;
-    --muted: #64748b;
-    --mono: 'Share Tech Mono', monospace;
-    --display: 'Barlow Condensed', sans-serif;
-    --body: 'Barlow', sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #080a0f;
+  --panel: #0d1017;
+  --card: #111620;
+  --card-hover: #161d2a;
+  --border: #1e2535;
+  --orange: #ff6b2b;
+  --orange-dim: rgba(255,107,43,0.15);
+  --green: #39e87c;
+  --blue: #4da6ff;
+  --text: #dce6f0;
+  --muted: #5a6a80;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Syne', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+
+/* TOPBAR */
+.topbar {
+  background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+.topbar-brand { font-family: var(--mono); font-size: 12px; color: var(--orange); letter-spacing: 3px; text-transform: uppercase; }
+.pill { font-family: var(--mono); font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border); color: var(--muted); }
+.pill.live { border-color: var(--green); color: var(--green); }
+.dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-right: 5px; animation: blink 1.8s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* HERO */
+.hero { padding: 64px 24px 40px; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content:''; position:absolute; top:-80px; left:50%; transform:translateX(-50%); width:700px; height:400px; background:radial-gradient(ellipse, rgba(255,107,43,.07) 0%, transparent 70%); pointer-events:none; }
+.eyebrow { font-family: var(--mono); font-size: 11px; color: var(--orange); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 18px; }
+.hero-title { font-size: clamp(40px,7vw,80px); font-weight: 800; line-height: 1; letter-spacing: -1px; text-transform: uppercase; margin-bottom: 16px; }
+.hero-title em { color: var(--orange); font-style: normal; }
+.hero-sub { font-size: 15px; color: var(--muted); max-width: 440px; margin: 0 auto 36px; line-height: 1.65; font-weight: 400; }
+.stats { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.stat { padding: 14px 28px; border-right: 1px solid var(--border); text-align: center; }
+.stat:last-child { border-right: none; }
+.stat-n { font-family: var(--mono); font-size: 26px; color: var(--orange); line-height: 1; font-weight: 700; }
+.stat-l { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; font-family: var(--mono); }
+
+/* CONTROLS */
+.controls { max-width: 900px; margin: 0 auto; padding: 32px 24px 20px; display: flex; flex-direction: column; gap: 16px; }
+.search-wrap { position: relative; }
+.search-wrap svg { position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); pointer-events:none; }
+#search { width:100%; background:var(--card); border:1px solid var(--border); border-radius:6px; color:var(--text); font-family:var(--mono); font-size:13px; padding:12px 14px 12px 42px; outline:none; letter-spacing:.5px; transition:border-color .2s; }
+#search:focus { border-color: var(--orange); }
+#search::placeholder { color: var(--muted); }
+.filters { display: flex; gap: 8px; flex-wrap: wrap; }
+.fbtn { font-family:var(--mono); font-size:11px; letter-spacing:1.5px; text-transform:uppercase; padding:7px 16px; border-radius:4px; border:1px solid var(--border); background:transparent; color:var(--muted); cursor:pointer; transition:all .18s; }
+.fbtn:hover { border-color:var(--orange); color:var(--orange); }
+.fbtn.on { border-color:var(--orange); color:var(--orange); background:var(--orange-dim); }
+
+/* GRID */
+.grid-wrap { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+#count { font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:16px; }
+.grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+.card { background:var(--card); padding:18px 20px; cursor:pointer; transition:background .15s; position:relative; }
+.card:hover { background:var(--card-hover); }
+.card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:2px; background:var(--orange); transform:scaleX(0); transition:transform .2s; transform-origin:left; }
+.card:hover::after { transform:scaleX(1); }
+.c-series { font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+.c-name { font-size:17px; font-weight:700; color:var(--text); margin-bottom:12px; }
+.c-tags { display:flex; gap:5px; flex-wrap:wrap; }
+.tag { font-family:var(--mono); font-size:10px; padding:2px 7px; border-radius:3px; letter-spacing:.5px; }
+.t-soc { background:rgba(77,166,255,.12); color:#70b8ff; border:1px solid rgba(77,166,255,.25); }
+.t-edl { background:var(--orange-dim); color:var(--orange); border:1px solid rgba(255,107,43,.3); }
+.t-reg { background:rgba(57,232,124,.1); color:#5af09e; border:1px solid rgba(57,232,124,.2); }
+.empty { display:none; text-align:center; padding:60px 24px; font-family:var(--mono); font-size:13px; color:var(--muted); letter-spacing:1px; background:var(--card); border:1px solid var(--border); border-radius:6px; }
+
+/* MODAL */
+.overlay { position:fixed; inset:0; background:rgba(0,0,0,.82); backdrop-filter:blur(6px); z-index:200; display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .22s; }
+.overlay.show { opacity:1; pointer-events:all; }
+.modal { background:var(--card); border:1px solid var(--border); border-radius:8px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; transform:translateY(16px); transition:transform .22s; }
+.overlay.show .modal { transform:translateY(0); }
+.m-head { padding:22px 22px 18px; border-bottom:1px solid var(--border); display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+.m-title { font-size:24px; font-weight:800; text-transform:uppercase; letter-spacing:.5px; }
+.m-x { background:transparent; border:1px solid var(--border); color:var(--muted); width:32px; height:32px; border-radius:4px; cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all .15s; }
+.m-x:hover { border-color:#ff4444; color:#ff4444; }
+.m-body { padding:8px 0; }
+.m-row { display:flex; align-items:center; justify-content:space-between; padding:11px 22px; border-bottom:1px solid var(--border); gap:16px; }
+.m-row:last-child { border-bottom:none; }
+.m-key { font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); flex-shrink:0; }
+.m-val { font-size:14px; color:var(--text); font-weight:600; text-align:right; }
+.m-val.code { font-family:var(--mono); font-size:13px; color:var(--orange); }
+.m-val.ok { color:var(--green); }
+.pulse-wrap { display:flex; align-items:center; gap:7px; justify-content:flex-end; }
+.pulse { width:8px; height:8px; border-radius:50%; background:var(--green); animation:blink 2s infinite; }
+
+/* FOOTER */
+footer { border-top:1px solid var(--border); padding:28px 24px; text-align:center; }
+footer a { color:var(--orange); font-family:var(--mono); font-size:13px; text-decoration:none; letter-spacing:1px; }
+footer p { color:var(--muted); font-size:12px; margin-top:8px; font-family:var(--mono); }
+
+::-webkit-scrollbar { width:5px; }
+::-webkit-scrollbar-track { background:var(--bg); }
+::-webkit-scrollbar-thumb { background:var(--border); border-radius:3px; }
+::-webkit-scrollbar-thumb:hover { background:var(--orange); }
+
+@media(max-width:540px){
+  .stats { flex-direction:column; }
+  .stat { border-right:none; border-bottom:1px solid var(--border); }
+  .stat:last-child { border-bottom:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">// Prime Mi Flash Tool</div>
+  <div style="display:flex;gap:8px;">
+    <span class="pill live"><span class="dot"></span>EDL 9008</span>
+    <span class="pill">v2.0</span>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">// Device Compatibility Matrix</div>
+  <h1 class="hero-title">Supported<br><em>Devices</em></h1>
+  <p class="hero-sub">All Xiaomi, Redmi, POCO &amp; Black Shark devices compatible with Prime Mi Flash Tool via EDL mode.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n" id="total">38</div><div class="stat-l">Devices</div></div>
+    <div class="stat"><div class="stat-n">4</div><div class="stat-l">Brands</div></div>
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">EDL</div></div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    <input type="text" id="search" placeholder="Search by name, SoC, codename...">
+  </div>
+  <div class="filters">
+    <button class="fbtn on" data-f="all">All</button>
+    <button class="fbtn" data-f="redmi">Redmi</button>
+    <button class="fbtn" data-f="poco">POCO</button>
+    <button class="fbtn" data-f="mi">Mi</button>
+    <button class="fbtn" data-f="blackshark">Black Shark</button>
+  </div>
+</div>
+
+<div class="grid-wrap">
+  <div id="count"></div>
+  <div class="grid" id="grid"></div>
+  <div class="empty" id="empty">No devices match your search.</div>
+</div>
+
+<footer>
+  <a href="https://t.me/om_n_15" target="_blank">Telegram Support: @om_n_15</a>
+  <p>Use at your own risk &middot; Prime Mi Flash Tool Community Guide</p>
+</footer>
+
+<div class="overlay" id="overlay">
+  <div class="modal">
+    <div class="m-head">
+      <div class="m-title" id="m-name"></div>
+      <button class="m-x" id="m-close">&#x2715;</button>
+    </div>
+    <div class="m-body" id="m-body"></div>
+  </div>
+</div>
+
+<script>
+var DATA = [
+  {name:"Redmi 9T",brand:"redmi",series:"Redmi 9 Series",soc:"Snapdragon 662",regions:"Global / India / EEA",codename:"lime"},
+  {name:"Redmi 9 Power",brand:"redmi",series:"Redmi 9 Series",soc:"Snapdragon 662",regions:"India",codename:"juice"},
+  {name:"Redmi 9A",brand:"redmi",series:"Redmi 9 Series",soc:"Helio G25",regions:"Global / India",codename:"dandelion"},
+  {name:"Redmi 9C",brand:"redmi",series:"Redmi 9 Series",soc:"Helio G35",regions:"Global",codename:"angelica"},
+  {name:"Redmi 9",brand:"redmi",series:"Redmi 9 Series",soc:"Helio G80",regions:"Global / EEA",codename:"lancelot"},
+  {name:"Redmi 9i",brand:"redmi",series:"Redmi 9 Series",soc:"Helio G25",regions:"India",codename:"dandelion"},
+  {name:"Redmi Note 7",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 660",regions:"Global",codename:"lavender"},
+  {name:"Redmi Note 7 Pro",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 675",regions:"India",codename:"violet"},
+  {name:"Redmi Note 8",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 665",regions:"Global",codename:"ginkgo"},
+  {name:"Redmi Note 8 Pro",brand:"redmi",series:"Redmi Note Series",soc:"Helio G90T",regions:"Global",codename:"begonia"},
+  {name:"Redmi Note 9",brand:"redmi",series:"Redmi Note Series",soc:"Helio G85",regions:"Global",codename:"merlin"},
+  {name:"Redmi Note 9S",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 720G",regions:"Global",codename:"curtana"},
+  {name:"Redmi Note 9 Pro",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 720G",regions:"India",codename:"joyeuse"},
+  {name:"Redmi Note 9 Pro Max",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 720G",regions:"India",codename:"excalibur"},
+  {name:"Redmi Note 10",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 678",regions:"Global",codename:"mojito"},
+  {name:"Redmi Note 10S",brand:"redmi",series:"Redmi Note Series",soc:"Helio G95",regions:"Global",codename:"rosemary"},
+  {name:"Redmi Note 10 Pro",brand:"redmi",series:"Redmi Note Series",soc:"Snapdragon 732G",regions:"Global / India",codename:"sweet"},
+  {name:"POCO F1",brand:"poco",series:"POCO F Series",soc:"Snapdragon 845",regions:"India",codename:"beryllium"},
+  {name:"POCO F2 Pro",brand:"poco",series:"POCO F Series",soc:"Snapdragon 865",regions:"Global",codename:"lmi"},
+  {name:"POCO X3",brand:"poco",series:"POCO X Series",soc:"Snapdragon 732G",regions:"India",codename:"karna"},
+  {name:"POCO X3 NFC",brand:"poco",series:"POCO X Series",soc:"Snapdragon 732G",regions:"Global",codename:"surya"},
+  {name:"POCO X3 Pro",brand:"poco",series:"POCO X Series",soc:"Snapdragon 860",regions:"Global",codename:"vayu"},
+  {name:"POCO M2 Pro",brand:"poco",series:"POCO M Series",soc:"Snapdragon 720G",regions:"India",codename:"gram"},
+  {name:"POCO M3",brand:"poco",series:"POCO M Series",soc:"Snapdragon 662",regions:"Global",codename:"citrus"},
+  {name:"POCO M3 Pro",brand:"poco",series:"POCO M Series",soc:"Dimensity 700",regions:"Global",codename:"camellia"},
+  {name:"POCO C3",brand:"poco",series:"POCO C Series",soc:"Helio G35",regions:"Global / India",codename:"angelican"},
+  {name:"Mi A3",brand:"mi",series:"Mi A Series",soc:"Snapdragon 665",regions:"Global",codename:"laurel_sprout"},
+  {name:"Mi 9T",brand:"mi",series:"Mi 9 Series",soc:"Snapdragon 730",regions:"Global",codename:"davinci"},
+  {name:"Mi 9T Pro",brand:"mi",series:"Mi 9 Series",soc:"Snapdragon 855",regions:"Global",codename:"raphael"},
+  {name:"Mi 10",brand:"mi",series:"Mi 10 Series",soc:"Snapdragon 865",regions:"Global / CN",codename:"umi"},
+  {name:"Mi 10 Pro",brand:"mi",series:"Mi 10 Series",soc:"Snapdragon 865",regions:"Global / CN",codename:"cmi"},
+  {name:"Mi 10T",brand:"mi",series:"Mi 10 Series",soc:"Snapdragon 865",regions:"Global",codename:"apollo"},
+  {name:"Mi 10T Pro",brand:"mi",series:"Mi 10 Series",soc:"Snapdragon 865",regions:"Global",codename:"apollopro"},
+  {name:"Mi 10T Lite",brand:"mi",series:"Mi 10 Series",soc:"Snapdragon 750G",regions:"Global",codename:"gauguin"},
+  {name:"Black Shark 2",brand:"blackshark",series:"Black Shark 2 Series",soc:"Snapdragon 855",regions:"Global / CN",codename:"skywalker"},
+  {name:"Black Shark 3",brand:"blackshark",series:"Black Shark 3 Series",soc:"Snapdragon 865",regions:"Global / CN",codename:"klein"},
+  {name:"Black Shark 3 Pro",brand:"blackshark",series:"Black Shark 3 Series",soc:"Snapdragon 865+",regions:"Global / CN",codename:"penrose"},
+  {name:"Black Shark 3S",brand:"blackshark",series:"Black Shark 3 Series",soc:"Snapdragon 865+",regions:"CN",codename:"klein"}
+];
+
+document.getElementById('total').textContent = DATA.length;
+
+var activeFilter = 'all';
+var gridEl = document.getElementById('grid');
+var emptyEl = document.getElementById('empty');
+var countEl = document.getElementById('count');
+var searchEl = document.getElementById('search');
+var overlay = document.getElementById('overlay');
+
+function getList() {
+  var q = searchEl.value.toLowerCase().trim();
+  return DATA.filter(function(d) {
+    var brandOk = activeFilter === 'all' || d.brand === activeFilter;
+    var qOk = !q || d.name.toLowerCase().indexOf(q) > -1 || d.soc.toLowerCase().indexOf(q) > -1 || d.codename.toLowerCase().indexOf(q) > -1 || d.series.toLowerCase().indexOf(q) > -1;
+    return brandOk && qOk;
+  });
+}
+
+function render() {
+  var list = getList();
+  countEl.textContent = '// showing ' + list.length + ' device' + (list.length !== 1 ? 's' : '');
+  gridEl.innerHTML = '';
+  if (list.length === 0) {
+    gridEl.style.display = 'none';
+    emptyEl.style.display = 'block';
+    return;
   }
+  gridEl.style.display = 'grid';
+  emptyEl.style.display = 'none';
+  list.forEach(function(d) {
+    var el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML =
+      '<div class="c-series">' + d.series + '</div>' +
+      '<div class="c-name">' + d.name + '</div>' +
+      '<div class="c-tags">' +
+        '<span class="tag t-soc">' + d.soc + '</span>' +
+        '<span class="tag t-edl">EDL &#x2713;</span>' +
+        '<span class="tag t-reg">' + d.regions.split('/')[0].trim() + '</span>' +
+      '</div>';
+    el.addEventListener('click', function() { openModal(d); });
+    gridEl.appendChild(el);
+  });
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+function openModal(d) {
+  document.getElementById('m-name').textContent = d.name;
+  document.getElementById('m-body').innerHTML =
+    '<div class="m-row"><span class="m-key">Status</span><span class="m-val ok"><span class="pulse-wrap"><span class="pulse"></span>Supported</span></span></div>' +
+    '<div class="m-row"><span class="m-key">Series</span><span class="m-val">' + d.series + '</span></div>' +
+    '<div class="m-row"><span class="m-key">Processor</span><span class="m-val">' + d.soc + '</span></div>' +
+    '<div class="m-row"><span class="m-key">Regions</span><span class="m-val">' + d.regions + '</span></div>' +
+    '<div class="m-row"><span class="m-key">EDL Mode</span><span class="m-val ok">Supported</span></div>' +
+    '<div class="m-row"><span class="m-key">Codename</span><span class="m-val code">' + d.codename + '</span></div>' +
+    '<div class="m-row"><span class="m-key">Flash Tool</span><span class="m-val">Prime Mi Flash Tool</span></div>';
+  overlay.classList.add('show');
+}
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--body);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+document.getElementById('m-close').addEventListener('click', function() { overlay.classList.remove('show'); });
+overlay.addEventListener('click', function(e) { if (e.target === overlay) overlay.classList.remove('show'); });
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') overlay.classList.remove('show'); });
 
-  /* Grid bg */
+document.querySelector('.filters').addEventListener('click', function(e) {
+  var btn = e.target.closest('.fbtn');
+  if (!btn) return;
+  document.querySelectorAll('.fbtn').forEach(function(b) { b.classList.remove('on'); });
+  btn.classList.add('on');
+  activeFilter = btn.getAttribute('data-f');
+  render();
+});
+
+searchEl.addEventListener('input', render);
+render();
+</script>
+</body>
+</html>
   body::before {
     content: '';
     position: fixed;
