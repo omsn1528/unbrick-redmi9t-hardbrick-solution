@@ -51,6 +51,9 @@ You must **temporarily disable** the following settings:
 ---
 
 ## 📋 Recovery Guide
+(Make sure your phone is in EDL mode, if in device manager you see {Qualcomm HS-USB QDLoader 9008} or any such then proceed)
+
+make sure you have installed all required driver, Qualcomm driver or adb driver, download all drivers you can dor your device 
 
 ### 1. Install Prime Mi Flash Tool
 Download and install the modified Prime Mi Flash Tool from the link above.
