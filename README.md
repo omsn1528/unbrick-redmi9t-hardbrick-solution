@@ -1,6 +1,8 @@
 # Unbrick Redmi 9T - Hard Brick Solution
 
-This repository provides a step-by-step guide to recover a hard-bricked Redmi 9T using **Prime Mi Flash Tool**.
+This repository provides a step-by-step guide to recover a hard-bricked Redmi 9T using **Prime Mi Flash Tool**.  
+
+If you face any issues, feel free to contact me: [t.me/om_n_15](https://t.me/om_n_15)
 
 ## Steps
 
@@ -17,6 +19,17 @@ This repository provides a step-by-step guide to recover a hard-bricked Redmi 9T
    - Start the flash process  
 6. **Charge your device** after recovery, especially if the battery was low.  
 
+## Download Files
+
+- [Prime Mi Flash Tool (70 MB)](https://t.me/joes_stuff/109832?single)  
+- [Patched Firehose Loader](https://t.me/joes_stuff/109832?single)  
+
+## Tips
+
+- Use a **quality USB cable** and connect directly to the PC (avoid hubs).  
+- Always keep the **firehose loader filename intact**.  
+- Ensure the device is **charged immediately after flashing**.  
+- Prime Mi Flash Tool is reliable for recovering hard-bricked Redmi 9T devices.
 ## Tips
 
 - Use a **quality USB cable** and connect directly to the PC (avoid hubs).  
