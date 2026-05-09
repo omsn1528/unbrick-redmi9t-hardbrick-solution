@@ -1,4 +1,4 @@
-# 🔧 Unbrick Redmi 9T — Hard Brick Solution
+# 🔧 Unbrick Your Phone (Redmi 9t Tested ✅)— Hard Brick Solution
 
 > Recover your **hard-bricked Redmi 9T** (or other supported Xiaomi/POCO devices) using **Prime Mi Flash Tool** via EDL (9008) mode.
 
