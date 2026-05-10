@@ -104,6 +104,8 @@ Qualcomm HS-USB QDLoader 9008
 
 ## 💡 Important Tips
 
+( if this don't work try : https://t.me/joes_stuff/109831 )
+
 - ✅ Use a **high-quality, data-capable USB cable** (not a charge-only cable)
 - ✅ Plug directly into **rear motherboard USB ports** on your PC
 - ❌ Avoid **USB hubs** or front-panel ports
